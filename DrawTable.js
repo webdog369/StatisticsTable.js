@@ -1,4 +1,8 @@
 function drawTable(obj) {
+    obj.width = Math.abs(obj.width);
+    obj.height = Math.abs(obj.height);
+    obj.baseWidth = Math.abs(obj.baseWidth);
+    obj.baseHeight = Math.abs(obj.baseHeight)
     let oCanvas = document.querySelector(obj.elName);
     oCanvas.setAttribute("width",obj.width)
     oCanvas.setAttribute("height",obj.height)
