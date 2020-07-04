@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo-01</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        canvas{
+            display: block;
+            margin: 100px auto;
+        }
+    </style>
+    <script src="StatisticsTable.js"></script>
+</head>
+<body>
+<canvas class="table"></canvas>
+<script>
+    let sTable = new StatisticsTable(".table")
+
+    // 绘制表格
+    sTable.table({
+        // 画布宽度
+        width:500,
+        // 画布高度
+        height:500,
+        // 格子宽度
+        baseWidth:30,
+        // 格子高度
+        baseHeight:30,
+        // 格子横线颜色
+        colLineColor:"#000",
+        // 格子竖线颜色
+        rowLineColor:"rgba(0,0,0,.5)",
+        // 表格背景颜色
+        backgroundColor:"snow"
+    })
+
+    // 绘制轴线
+    sTable.axis({
+        // 原点x坐标
+        x:30,
+        // 原点y坐标
+        y:480,
+        // x轴长度(单位是baseWidth)
+        xLength:14,
+        // y轴长度(单位是baseHeight)
+        yLength:15,
+        // x轴的单位名称
+        xName:"时间(年)",
+        // y轴的单位名称
+        yName:"代码量/行",
+        // 坐标系字体大小 单位(px)"
+        fontSize:16
+    })
+
+</script>
+</body>
+</html>
