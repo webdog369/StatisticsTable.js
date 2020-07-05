@@ -31,9 +31,9 @@
         // 格子高度
         baseHeight:30,
         // 格子横线颜色
-        colLineColor:"rgba(0,0,0,.2)",
+        colLineColor:"rgba(0,0,0,.3)",
         // 格子竖线颜色
-        rowLineColor:"rgba(0,0,0,.2)",
+        rowLineColor:"snow",
         // 表格背景颜色
         backgroundColor:"snow"
     })
@@ -49,11 +49,35 @@
         // y轴长度(单位是baseHeight)
         yLength:18,
         // x轴的单位名称
-        xName:"时间(年)",
+        xName:"年龄",
         // y轴的单位名称
-        yName:"代码量/行",
+        yName:"占比/%",
         // 坐标系字体大小 单位(px)"
         fontSize:16
+    })
+
+    // 绘制条形统计图
+    sTable.bar({
+        // 统计表标题
+        title:"中国网民年龄结构(2017)",
+        // 标题x坐标
+        titleX:300,
+        // 标题y坐标
+        titleY:45,
+        // 横轴数据,接收一个数组
+        xData:["10岁以下","10-19岁","20-29岁","30-39岁","40-49岁","50-59岁","60岁以上"],
+        // 纵轴数据,接收一个数组
+        yData:["3.1%","19.4%","29.7%","23.0%","14.1%","5.8%","4.8%"],
+        // 统计条的背景颜色
+        barColor:"tomato",
+        // 是否启用统计条背景颜色渐变效果 true为启用 false为不启用 默认不启用
+        linearColor:false,
+        // 横轴纵轴数据字体大小 单位:px
+        fontSize: 13,
+        // 横轴字体颜色 默认黑色
+        xNameColor:"#333",
+        // 纵轴字体颜色 默认黑色
+        yNameColor:"#666"
     })
 
 </script>
