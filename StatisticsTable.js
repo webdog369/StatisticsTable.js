@@ -107,24 +107,32 @@ class StatisticsTable {
 
     // 绘制条形图
     bar(obj){
-     // 获取x轴数据
+        // 定义单个统计条的宽度
         let barWidth = (this.baseWidth * this.xLength / obj.xData.length) - 15;
+        // 定义统计条初始高度
         let barHeight = this.baseHeight * this.yLength * 2;
+        // 获取原点x坐标
         let baseX = this.basePointX;
         let oCtx = this.oCtx;
+        // 获取x轴数据和y轴数据 并且将数据拼接成一个二维数组 以便遍历
         let dataList =obj.xData.map((key,value)=>[key,obj.yData[value]]);
+        // 统计条颜色初始化
         let currentBarColor = obj.barColor?obj.barColor:"#333";
+        //设置标题样式及位置调整
         oCtx.textAlign = "center"
         oCtx.textBaseline = "middle"
         oCtx.fillText(obj.title?obj.title:"",obj.titleX?obj.titleX:this.oCanvas.width / 2,obj.titleY?obj.titleY:this.baseHeight*1.5);
+        // 遍历数据并绘制统计条
         for (let key of dataList){
-            let linearGradient1 = oCtx.createLinearGradient(baseX + 10,this.basePointY - (parseFloat(key[1])/100*barHeight),baseX + 10 + barWidth,this.basePointY - (parseFloat(key[1])/100*barHeight))
+            let linearGradient1 = oCtx.createLinearGradient(baseX + 10,this.basePointY - (parseFloat(key[1])/100*barHeight),baseX + 10 + barWidth,this.basePointY - (parseFloat(key[1])/100*barHeight));
+            // 设置统计条颜色是否为渐变色
             oCtx.fillStyle = obj.barColor?obj.barColor:"#333";
             linearGradient1.addColorStop(0,currentBarColor);
             linearGradient1.addColorStop(.5,"#fff");
             linearGradient1.addColorStop(1,currentBarColor);
             obj.linearColor?oCtx.fillStyle = linearGradient1:oCtx.fillStyle = currentBarColor;
             oCtx.fillRect(baseX + 10,this.basePointY - (parseFloat(key[1])/100*barHeight) ,barWidth,parseFloat(key[1])/100*barHeight);
+            // 将xy轴数据绘制到统计表中
             oCtx.textBaseline = "top"
             oCtx.font = obj.fontSize?`${obj.fontSize}px 微软雅黑`:"12px 微软雅黑"
             oCtx.fillStyle = obj.xNameColor?obj.xNameColor:"#000"
