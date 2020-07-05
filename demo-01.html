@@ -10,7 +10,7 @@
         }
         canvas{
             display: block;
-            margin: 100px auto;
+            margin: 50px auto;
         }
     </style>
     <script src="StatisticsTable.js"></script>
@@ -23,17 +23,17 @@
     // 绘制表格
     sTable.table({
         // 画布宽度
-        width:500,
+        width:600,
         // 画布高度
-        height:500,
+        height:600,
         // 格子宽度
         baseWidth:30,
         // 格子高度
         baseHeight:30,
         // 格子横线颜色
-        colLineColor:"#000",
+        colLineColor:"rgba(0,0,0,.2)",
         // 格子竖线颜色
-        rowLineColor:"rgba(0,0,0,.5)",
+        rowLineColor:"rgba(0,0,0,.2)",
         // 表格背景颜色
         backgroundColor:"snow"
     })
@@ -43,11 +43,11 @@
         // 原点x坐标
         x:30,
         // 原点y坐标
-        y:480,
+        y:570,
         // x轴长度(单位是baseWidth)
-        xLength:14,
+        xLength:17,
         // y轴长度(单位是baseHeight)
-        yLength:15,
+        yLength:18,
         // x轴的单位名称
         xName:"时间(年)",
         // y轴的单位名称

@@ -97,5 +97,8 @@ class StatisticsTable {
         oCtx.closePath();
         this.triangle(obj.x,obj.y - this.baseHeight*obj.yLength,false);
     }
+
+    // 绘制条形图
+
 }
 
