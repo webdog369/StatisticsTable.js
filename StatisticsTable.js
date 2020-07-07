@@ -105,42 +105,55 @@ class StatisticsTable {
         this.yLength = obj.yLength;
     }
 
-    // 绘制条形图
+    // 绘制条形图及折线图
     bar(obj){
+        // 拿到画笔
+        let oCtx = this.oCtx;
         // 定义单个统计条的宽度
         let barWidth = (this.baseWidth * this.xLength / obj.xData.length) - 15;
         // 定义统计条初始高度
         let barHeight = this.baseHeight * this.yLength * 2;
         // 获取原点x坐标
         let baseX = this.basePointX;
-        let oCtx = this.oCtx;
+        // 获取原点y坐标
+        let baseY = this.basePointY;
         // 获取x轴数据和y轴数据 并且将数据拼接成一个二维数组 以便遍历
-        let dataList =obj.xData.map((key,value)=>[key,obj.yData[value]]);
+        let dataList = obj.xData.map((key,value)=>[key,obj.yData[value]]);
         // 统计条颜色初始化
         let currentBarColor = obj.barColor?obj.barColor:"#333";
         //设置标题样式及位置调整
         oCtx.textAlign = "center"
         oCtx.textBaseline = "middle"
         oCtx.fillText(obj.title?obj.title:"",obj.titleX?obj.titleX:this.oCanvas.width / 2,obj.titleY?obj.titleY:this.baseHeight*1.5);
+        oCtx.moveTo(this.basePointX+ 10 + barWidth / 2,this.basePointY - (parseFloat(obj.yData[0])/100*barHeight));
+        oCtx.strokeStyle = obj.lineChartColor
         // 遍历数据并绘制统计条
         for (let key of dataList){
-            let linearGradient1 = oCtx.createLinearGradient(baseX + 10,this.basePointY - (parseFloat(key[1])/100*barHeight),baseX + 10 + barWidth,this.basePointY - (parseFloat(key[1])/100*barHeight));
-            // 设置统计条颜色是否为渐变色
-            oCtx.fillStyle = obj.barColor?obj.barColor:"#333";
-            linearGradient1.addColorStop(0,currentBarColor);
-            linearGradient1.addColorStop(.5,"#fff");
-            linearGradient1.addColorStop(1,currentBarColor);
-            obj.linearColor?oCtx.fillStyle = linearGradient1:oCtx.fillStyle = currentBarColor;
-            oCtx.fillRect(baseX + 10,this.basePointY - (parseFloat(key[1])/100*barHeight) ,barWidth,parseFloat(key[1])/100*barHeight);
+            // 判断用户是否需要渲染为条形统计图
+            if (!obj.lineChart){
+                let linearGradient1 = oCtx.createLinearGradient(baseX + 10,baseY - (parseFloat(key[1])/100*barHeight),baseX + 10 + barWidth,baseY - (parseFloat(key[1])/100*barHeight));
+                // 设置统计条颜色是否为渐变色
+                oCtx.fillStyle = obj.barColor?obj.barColor:"#333";
+                linearGradient1.addColorStop(0,currentBarColor);
+                linearGradient1.addColorStop(.5,"#fff");
+                linearGradient1.addColorStop(1,currentBarColor);
+                obj.linearColor?oCtx.fillStyle = linearGradient1:oCtx.fillStyle = currentBarColor;
+                oCtx.fillRect(baseX + 10,baseY - (parseFloat(key[1])/100*barHeight) ,barWidth,parseFloat(key[1])/100*barHeight);
+            }else {
+                oCtx.arc(baseX + 10 + barWidth / 2,baseY - (parseFloat(key[1])/100*barHeight),1,0,Math.PI*2);
+            }
+
             // 将xy轴数据绘制到统计表中
             oCtx.textBaseline = "top"
             oCtx.font = obj.fontSize?`${obj.fontSize}px 微软雅黑`:"12px 微软雅黑"
             oCtx.fillStyle = obj.xNameColor?obj.xNameColor:"#000"
-            oCtx.fillText(key[0],baseX + barWidth / 2 + 10,this.basePointY + 5)
+            oCtx.fillText(key[0],baseX + barWidth / 2 + 10,baseY + 5)
             oCtx.fillStyle = obj.yNameColor?obj.yNameColor:"#000"
-            oCtx.fillText(key[1],baseX + barWidth / 2 + 10,this.basePointY - (parseFloat(key[1])/100*barHeight) - 20);
+            oCtx.fillText(key[1],baseX + barWidth / 2 + 10,baseY - (parseFloat(key[1])/100*barHeight) - 20);
             baseX += barWidth + 10;
         }
+        // 将折线图连接起来
+        oCtx.stroke();
     }
 }
 
