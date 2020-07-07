@@ -72,6 +72,12 @@ let sTable = new StatisticsTable(".table")
         yData:["3.1%","19.4%","29.7%","23.0%","14.1%","5.8%","4.8%"],
         // 统计条的背景颜色
         barColor:"tomato",
+        // 是否需要绘制为折线图样式 若开启折线图,则条形图就会隐藏
+        lineChart:true,
+        // 折线图背颜色
+        lineChartColor:"red",
+        // 是否启用统计条背景颜色渐变效果 true为启用 false为不启用 默认不启用
+        linearColor:false,
         // 是否启用统计条背景颜色渐变效果 true为启用 false为不启用 默认不启用
         linearColor:false,
         // 横轴纵轴数据字体大小 单位:px
