@@ -112,7 +112,7 @@ class StatisticsTable {
         // 定义单个统计条的宽度
         let barWidth = (this.baseWidth * this.xLength / obj.xData.length) - 15;
         // 定义统计条初始高度
-        let barHeight = this.baseHeight * this.yLength * 2;
+        let barHeight = this.baseHeight * this.yLength * 2.5;
         // 获取原点x坐标
         let baseX = this.basePointX;
         // 获取原点y坐标
@@ -121,12 +121,15 @@ class StatisticsTable {
         let dataList = obj.xData.map((key,value)=>[key,obj.yData[value]]);
         // 统计条颜色初始化
         let currentBarColor = obj.barColor?obj.barColor:"#333";
+        // 再次获取原点坐标x备用
+        let pointBaseX = this.basePointX;
         //设置标题样式及位置调整
         oCtx.textAlign = "center"
         oCtx.textBaseline = "middle"
         oCtx.fillText(obj.title?obj.title:"",obj.titleX?obj.titleX:this.oCanvas.width / 2,obj.titleY?obj.titleY:this.baseHeight*1.5);
+        oCtx.beginPath();
+        oCtx.lineWidth = 2
         oCtx.moveTo(this.basePointX+ 10 + barWidth / 2,this.basePointY - (parseFloat(obj.yData[0])/100*barHeight));
-        oCtx.strokeStyle = obj.lineChartColor
         // 遍历数据并绘制统计条
         for (let key of dataList){
             // 判断用户是否需要渲染为条形统计图
@@ -140,7 +143,9 @@ class StatisticsTable {
                 obj.linearColor?oCtx.fillStyle = linearGradient1:oCtx.fillStyle = currentBarColor;
                 oCtx.fillRect(baseX + 10,baseY - (parseFloat(key[1])/100*barHeight) ,barWidth,parseFloat(key[1])/100*barHeight);
             }else {
-                oCtx.arc(baseX + 10 + barWidth / 2,baseY - (parseFloat(key[1])/100*barHeight),1,0,Math.PI*2);
+               // oCtx.arc(baseX + 10 + barWidth / 2,baseY - (parseFloat(key[1])/100*barHeight),5,0,Math.PI*2);
+                oCtx.strokeStyle = obj.lineChartColor;
+                oCtx.lineTo(baseX + 10 + barWidth / 2,baseY - (parseFloat(key[1])/100*barHeight));
             }
 
             // 将xy轴数据绘制到统计表中
@@ -154,6 +159,19 @@ class StatisticsTable {
         }
         // 将折线图连接起来
         oCtx.stroke();
+        oCtx.closePath();
+
+        // 绘制折线图坐标点
+        for (let key of dataList){
+            if (obj.lineChart){
+            oCtx.beginPath();
+            oCtx.arc(pointBaseX + 10 + barWidth / 2,baseY - (parseFloat(key[1])/100*barHeight),5,0,Math.PI*2);
+            oCtx.fillStyle = obj.lineChartColor;
+            oCtx.fill()
+            pointBaseX += barWidth + 10;
+            oCtx.closePath();
+            }
+        }
     }
 }
 
